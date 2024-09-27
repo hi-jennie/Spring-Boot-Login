@@ -1,4 +1,4 @@
-package com.example.springbootlogin;
+package com.example.springbootlogin.appUser;
 
 import org.springframework.stereotype.Repository;
 import java.util.Optional;

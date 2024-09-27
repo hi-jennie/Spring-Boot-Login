@@ -1,4 +1,4 @@
-package com.example.springbootlogin;
+package com.example.springbootlogin.appUser;
 
 import jakarta.persistence.*;
 import lombok.EqualsAndHashCode;
@@ -11,7 +11,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
 
 // 来自于 Lombok 库，它们的作用是简化代码，避免手动编写常见的模板代码
 @Getter
