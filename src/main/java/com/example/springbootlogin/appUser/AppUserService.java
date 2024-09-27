@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 // this class is specific for spring security
@@ -16,6 +17,7 @@ import org.springframework.stereotype.Service;
 public class AppUserService implements UserDetailsService {
     private final static String USER_NOT_FOUND_MSG = "user with email %s not found";
     private final AppUserRepository appUserRepository;
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
     @Override
     // loadUserByUsername 方法：这个方法在用户登录时被调用，它接收一个邮箱（或用户名）作为参数，去数据库中查找用户。
     // 如果找到了用户，就返回用户的详细信息。如果没找到，就抛出异常，表示用户不存在。
@@ -24,5 +26,24 @@ public class AppUserService implements UserDetailsService {
                 orElseThrow(()->
                         new UsernameNotFoundException(
                                 String.format(USER_NOT_FOUND_MSG,email)));
+    }
+
+    public String signUpUser(AppUser appUser){
+        boolean userExists = appUserRepository
+                .findByEmail(appUser.getEmail())
+                .isPresent();
+
+        if(userExists){
+            throw new IllegalStateException("email already taken");
+        }
+
+        String encodedPassword = bCryptPasswordEncoder.encode(appUser.getPassword());
+        appUser.setPassword(encodedPassword);
+
+        appUserRepository.save(appUser);
+
+        // TODO: Send confirmation token
+
+        return "it works";
     }
 }

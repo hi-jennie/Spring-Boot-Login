@@ -1,7 +1,6 @@
 package com.example.springbootlogin.security;
 
 import com.example.springbootlogin.appUser.AppUserService;
-import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

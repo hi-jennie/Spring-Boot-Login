@@ -1,6 +1,6 @@
 package com.example.springbootlogin.appUser;
 
-import jakarta.persistence.*;
+
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -8,7 +8,7 @@ import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-
+import javax.persistence.*;
 import java.util.Collection;
 import java.util.Collections;
 
@@ -23,28 +23,28 @@ public class AppUser implements UserDetails {
     @SequenceGenerator(name = "student_sequence",sequenceName = "student_sequence",allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "student_sequence")
     private Long id;
-    private String username;
+    private String firstName;
+    private String lastName;
     private String email;
     private String password;
     // 枚举类型在数据库中的保存形式有两种主要方式，分别是通过数字（Ordinal）和字符串（String）来存储
     // tell JPA that we want to store the enum as a string
     @Enumerated(EnumType.STRING)
     private AppUserRole appUserRole;
-    private Boolean locked;
-    private Boolean enabled;
+    private Boolean locked = false;
+    private Boolean enabled = false;
 
-    public AppUser(String password,
-                   String username,
+    public AppUser(String firstName,
+                   String lastName,
                    String email,
-                   AppUserRole appUserRole,
-                   Boolean locked,
-                   Boolean enabled) {
-        this.password = password;
-        this.username = username;
+                   String password,
+                   AppUserRole appUserRole
+                   ) {
+        this.firstName = firstName;
+        this.lastName = lastName;
         this.email = email;
+        this.password = password;
         this.appUserRole = appUserRole;
-        this.locked = locked;
-        this.enabled = enabled;
     }
 
     @Override
@@ -61,7 +61,15 @@ public class AppUser implements UserDetails {
 
     @Override
     public String getUsername() {
-        return username;
+        return email;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public String getLastName() {
+        return firstName;
     }
 
     @Override
