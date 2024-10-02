@@ -61,4 +61,15 @@ public class AppUserService implements UserDetailsService {
 
         return token;
     }
+
+    public int enableAppUser(String email) {
+        return appUserRepository.enableAppUser(email);
+    }
+    /* the whole logic of the registration process:
+    1.	Check if the user exists: Verify if the email is already registered.
+	2.	Encode and save the password: Securely encode the password and save the user to the database.
+	3.	Generate a confirmation token: Create a unique token and associate it with the user.
+	4.	Send the confirmation token via email: (Not implemented yet) Send the token to the user for email confirmation.
+	5.	Enable the user account: Upon email confirmation, update the user’s status to activate the account.
+     */
 }

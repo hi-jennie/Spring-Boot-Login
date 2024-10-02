@@ -29,6 +29,8 @@ public class ConfirmationToken {
     private LocalDateTime createdAt;
     @Column(nullable = false)
     private LocalDateTime expiresAt;
+    @Column
+    private LocalDateTime confirmedAt;
 
 
     // many ConfirmationToken can be associated with one AppUser
